@@ -1,14 +1,14 @@
 [bridge]
-bridge-00
+bridge-00 ansible_ssh_host=192.168.0.226
 
 [sys]
-sys-00
+sys-00 ansible_ssh_host=192.168.0.227
 
 [nginx]
-nginx-1
+nginx-1 ansible_ssh_host=192.168.0.228
 
 [jenkins]
-jenkins-00
+jenkins-00 ansible_ssh_host=192.168.0.229
 
 [eefocus_main]
 eefocus_main_0
