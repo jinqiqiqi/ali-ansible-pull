@@ -1,0 +1,10 @@
+schedule: "* */23 * * *"
+
+cron_user: "root"
+
+ansible_pull_log: "/var/log/ansible_pull.log"
+
+work_dir: "/var/lib/ansible/local"
+
+repo_url: "https://github.com/jinqiqiqi/ali-playbook.git"
+

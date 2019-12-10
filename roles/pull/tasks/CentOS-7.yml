@@ -1,5 +1,28 @@
 ---
 
+- name: Install ansible dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ansible
+    - git
 
-- name: Testing hostname
-  command: hostname
+- name: Create local working directory
+  file:
+    path: "{{ work_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0751
+
+- name: Install ansible-pull task
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: "cron_ansible-pull.j2", dest: "/etc/cron.d/ansible-pull" }
+    - { src: "logrotate_ansible-pull.j2", dest: "/etc/logrotate.d/ansible-pull" }

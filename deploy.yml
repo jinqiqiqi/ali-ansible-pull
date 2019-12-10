@@ -11,7 +11,7 @@
   #     dnf: name=* state=latest
 
   roles:
-  - pull
+    - pull
 
   # post_tasks:
   #   - name: post tasks
