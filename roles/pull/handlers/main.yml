@@ -1,2 +1,7 @@
 ---
 # handlers file for roles/ansible-pull
+
+- include: ../../../handlers/main.yml
+
+- name: crontab updated
+  command: pwd

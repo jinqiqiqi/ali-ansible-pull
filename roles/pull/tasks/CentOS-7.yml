@@ -26,3 +26,5 @@
   with_items:
     - { src: "cron_ansible-pull.j2", dest: "/etc/cron.d/ansible-pull" }
     - { src: "logrotate_ansible-pull.j2", dest: "/etc/logrotate.d/ansible-pull" }
+  notify:
+    - crontab updated

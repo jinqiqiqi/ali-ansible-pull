@@ -1,0 +1,21 @@
+
+# notification handlers
+- name: Send Slack notification.
+  slack:
+    token: "TD91LBXBM/BFRTW9P54/SwzT2sC2UJPsSWj3NRKW1sl5"
+    msg: "Service in role: {{ role_names }} @{{ inventory_hostname }} ({{ ansible_facts.all_ipv4_addresses }}) is restarted/changed! {{ CI_JOB_URL }}"
+    username: 'aliyun >>> {{ inventory_hostname }} ({{ ansible_facts.all_ipv4_addresses }})'
+    channel: "#sync-nginx-conf"
+  # when: inventory_hostname != "cache-1"
+  listen:
+    - "crontab updated"
+
+- name: Send Mattermost notification.
+  mattermost:
+    url: "http://218.4.226.238:8065"
+    api_key: "if11n7se63ycpx43sh37yskkyo"
+    text: "Service in role: {{ role_names }} @{{ inventory_hostname }} ({{ ansible_facts.all_ipv4_addresses }}) is restarted/changed! {{ CI_JOB_URL }}"
+    username: 'aliyun >>> {{ inventory_hostname }} ({{ ansible_facts.all_ipv4_addresses }})'
+  # when: inventory_hostname != "cache-1"
+  listen:
+    - "crontab updated"
