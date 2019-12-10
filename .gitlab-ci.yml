@@ -30,6 +30,7 @@ before_script:
   - docker login -u ek -p ek "${CI_REGISTRY}"
   - mkdir -p ~/.ssh/
   - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+  - echo "${SSH_SERVER_PRIVATE_KEY}" > ~/.ssh/id_rsa.server
   - chmod 600  -Rf ~/.ssh
   - mv ansible.cfg /root/.ansible.cfg
   - mv inventory /root/
