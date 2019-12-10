@@ -1,0 +1,34 @@
+image: h.eefocus.tech/devops/docker/ansible
+
+variables:
+  CI_DEBUG_TRACE: "false"
+
+services:
+  # - docker:dind
+  - name: docker:stable-dind
+    command: ["--insecure-registry=$CI_REGISTRY"]
+
+stages:
+  - prepare
+  - install
+  
+# before_script:
+#   # - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
+#   - docker login -u ek -p ek "${CI_REGISTRY}"
+#   - mkdir -p ~/.ssh/
+#   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#   - chmod 600  -Rf ~/.ssh
+#   - mv ansible.cfg /root/.ansible.cfg
+#   - mv inventory /root/
+#   # - cat ~/.ssh/id_rsa
+
+deploy:
+  # <<: *default_tags
+  stage: prepare
+  script:
+    - pwd
+  # only:
+  #   - master
+  # when: manual
+  
+
