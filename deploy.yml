@@ -1,0 +1,17 @@
+---
+- name: Deploy ansible-pull to remote servers
+  hosts: 
+    - account
+  become_user: root
+  become: yes
+
+  # pre_tasks:
+  #   - name: Pre Task => Update Yum
+  #     dnf: name=* state=latest
+
+  roles:
+    - pull
+
+  # post_tasks:
+  #   - name: post tasks
+  #     dnf: name=* state=latest
