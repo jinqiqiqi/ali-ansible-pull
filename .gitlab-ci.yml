@@ -9,8 +9,8 @@ services:
     command: ["--insecure-registry=$CI_REGISTRY"]
 
 stages:
-  - prepare
-  - install
+  - preparation
+  - installation
 
 .common_runner: &common_runner
   retry: 1
@@ -37,35 +37,35 @@ before_script:
 
 syntax_checking:
   <<: *common_runner
-  stage: prepare
+  stage: preparation
   script:
-    - for job in  `ls *.yml`; do ansible-playbook $job --syntax-check; done
+    - for job in  `ls *.yml`; do ansible-playbook $job -e running_host_group=bridge --syntax-check; done
 
 
 deploy_bridge:
   <<: *common_runner
-  stage: install
+  stage: installation
   script:
     - ansible-playbook -v deploy.yml -e CI_JOB_URL="\"$CI_JOB_URL\"" -e running_host_group=bridge
   when: manual
   
 deploy_nginx:
   <<: *common_runner
-  stage: install
+  stage: installation
   script:
     - ansible-playbook -v deploy.yml -e CI_JOB_URL="\"$CI_JOB_URL\"" -e running_host_group=nginx
   when: manual
   
 deploy_jenkins:
   <<: *common_runner
-  stage: install
+  stage: installation
   script:
     - ansible-playbook -v deploy.yml -e CI_JOB_URL="\"$CI_JOB_URL\"" -e running_host_group=jenkins
   when: manual
   
 deploy_sys:
   <<: *common_runner
-  stage: install
+  stage: installation
   script:
     - ansible-playbook -v deploy.yml -e CI_JOB_URL="\"$CI_JOB_URL\"" -e running_host_group=sys
   when: manual
