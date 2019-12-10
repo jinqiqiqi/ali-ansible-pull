@@ -1,7 +1,7 @@
 ---
 - name: Deploy ansible-pull to remote servers
-  hosts: 
-    - account
+  hosts:
+    - "{{ running_host_group }}"
   become_user: root
   become: yes
 
