@@ -1,3 +1,4 @@
+localhost
 [bridge]
 bridge-00 ansible_ssh_host=192.168.0.226
 
