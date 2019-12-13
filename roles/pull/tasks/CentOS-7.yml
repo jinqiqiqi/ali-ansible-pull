@@ -16,7 +16,7 @@
     group: root
     mode: 0751
 
-- name: "Install ansible-pull task {{ hostvars[inventory_hostname].group_names[0] }}"
+- name: "Install ansible-pull task for group: {{ hostvars[inventory_hostname].group_names[0] }}"
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
