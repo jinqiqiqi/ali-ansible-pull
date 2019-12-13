@@ -7,7 +7,7 @@ pipeline {
                     sh "echo ${GIT_U}, ${GIT_K}| tee -a hi.txt"
                     sh "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${GIT_K} ${GIT_U}@jenkins-00 hostname"
                     sh "cat ${GIT_K} > hii.txt"
-                    ansiblePlaybook credentialsId: 'gitk', disableHostKeyChecking: true, extras: '-e host=jenkins-00', inventory: 'inventory/hosts', playbook: 'deploy.yml'
+                    ansiblePlaybook credentialsId: 'gitk', disableHostKeyChecking: true, extras: '-e running_host_group=jenkins', inventory: 'inventory/hosts', playbook: 'deploy.yml'
                 }
                 sh 'hostname'
                 sh 'uptime'
