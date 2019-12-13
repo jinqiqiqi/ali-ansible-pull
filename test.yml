@@ -2,7 +2,7 @@
 
 - name: "Deploy ansible-pull to remote servers"
   hosts:
-    - "localhost"
+    - localhost
   become_user: root
   connection: local
   become: yes
