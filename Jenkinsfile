@@ -7,8 +7,6 @@ pipeline {
                     sh "cat ${GIT_K} | tee ~/.ssh/id_rsa; chmod 600 ~/.ssh/id_rsa"
                     ansiblePlaybook credentialsId: 'gitk', disableHostKeyChecking: true, extras: '', inventory: 'inventory/hosts', playbook: 'deploy.yml'
                 }
-                sh "rm -f ~/.ssh/id_rsa"
-            
             }
         }
     }
@@ -23,6 +21,7 @@ pipeline {
             echo "Changed result."
         }
         always {
+            sh "rm -f ~/.ssh/id_rsa"
             echo "Always result."
         }
         unstable {
