@@ -2,7 +2,11 @@
 
 - name: "Deploy ansible-pull to remote servers"
   hosts:
-    - "{{ running_host_group }}"
+    # - "{{ running_host_group }}"
+    - bridge
+    - sys
+    - nginx
+    - jenkins
   become_user: root
   become: yes
 
