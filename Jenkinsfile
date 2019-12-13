@@ -4,10 +4,10 @@ pipeline {
         stage('build') {
             steps {
                 withCredentials ([sshUserPrivateKey(credentialsId: 'gitk', keyFileVariable: 'GIT_K', usernameVariable: 'GIT_U')]) {
-                    sh "echo ${GIT_U}, ${GIT_K}| tee -a hi.txt"
                     sh "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${GIT_K} ${GIT_U}@jenkins-00 hostname"
-                    sh "cat ${GIT_K} > hii.txt"
+                    sh "cat ${GIT_K} | tee ~/.ssh/id_rsa; chmod 600 ~/.ssh/id_rsa"
                     ansiblePlaybook credentialsId: 'gitk', disableHostKeyChecking: true, extras: '-e running_host_group=jenkins', inventory: 'inventory/hosts', playbook: 'deploy.yml'
+                    sh "rm -f ~/.ssh/id_rsa"
                 }
                 sh 'hostname'
                 sh 'uptime'
