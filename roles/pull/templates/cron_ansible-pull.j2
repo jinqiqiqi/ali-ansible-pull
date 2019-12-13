@@ -1,2 +1,2 @@
-# Cron job to git clone/pull a repo and then run locally, on: {{ hostvars[inventory_hostname].group_names[0] }}
+# Cron job to git clone/pull a repo and then run locally, on group: {{ hostvars[inventory_hostname].group_names[0] }}
 {{ schedule }} {{ cron_user }} ansible-pull -C master -d {{ work_dir }} -i {{ work_dir }}/inventory/hosts -U {{ repo_url }} {{ hostvars[inventory_hostname].group_names[0] }}.yml -e host={{ inventory_hostname }} 2>&1 >> {{ ansible_pull_log }}
