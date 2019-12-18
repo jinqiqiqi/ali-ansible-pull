@@ -40,7 +40,7 @@ pipeline {
               subject: "Status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
               body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
             withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
-                slackSend teamDomain: 'domain',
+                slackSend teamDomain: 'bigeworld',
                     channel: 'jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
