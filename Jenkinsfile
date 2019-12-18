@@ -36,19 +36,16 @@ pipeline {
         }
         always {
             echo "Always result. 4"
-			wrap([$class: 'BuildUser']) {
-			    sh 'echo "${BUILD_USER}"'
-                mail to: 'qi.jin@supplyframe.cn',
-                  subject: "Status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
-                  body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
-                withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
-                    slackSend teamDomain: 'bigeworld',
-                        channel: '#jenkins', 
-                        token: slackCredentials, 
-                        color: 'danger',
-                        message: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
-                }
-			}
+            mail to: 'qi.jin@supplyframe.cn',
+              subject: "Status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
+              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
+            withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
+                slackSend teamDomain: 'bigeworld',
+                    channel: '#jenkins', 
+                    token: slackCredentials, 
+                    color: 'danger',
+                    message: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
+            }
         }
         unstable {
             echo "Unstable result. 5"
