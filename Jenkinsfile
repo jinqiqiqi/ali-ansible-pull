@@ -16,7 +16,6 @@ pipeline {
                     ansiblePlaybook credentialsId: 'gitk', disableHostKeyChecking: true, extras: '-e running_host_group=jenkins', inventory: 'inventory/hosts', playbook: 'deploy.yml'
                     sh "rm -f ~/.ssh/id_rsa"
                 }
-            
             }
         }
         stage('build2') {
@@ -28,7 +27,6 @@ pipeline {
     post {
         success {
             echo "Success result. 1"
-
         }
         failure {
             echo "Failure result. 2"
@@ -37,12 +35,17 @@ pipeline {
             echo "Changed result. 3"
         }
         always {
-            
             echo "Always result. 4"
             mail to: 'qi.jin@supplyframe.cn',
-              subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+              subject: "Status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
               body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
-            slackSend color: 'good', message: 'Message from Jenkins Pipeline'
+            withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
+                slackSend teamDomain: 'domain',
+                    channel: 'jenkins', 
+                    token: slackCredentials, 
+                    color: 'danger',
+                    message: 'Not so good message from Jenkins Pipeline'
+            }
         }
         unstable {
             echo "Unstable result. 5"
