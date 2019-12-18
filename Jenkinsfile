@@ -44,7 +44,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: '${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}.'
+                    message: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
             }
         }
         unstable {
