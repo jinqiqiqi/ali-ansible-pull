@@ -37,6 +37,7 @@ pipeline {
             mail to: 'qi.jin@supplyframe.cn',
               subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
               body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result"
+            slackSend color: 'good', message: 'Message from Jenkins Pipeline'
         }
         unstable {
             echo "Unstable result. 5"
