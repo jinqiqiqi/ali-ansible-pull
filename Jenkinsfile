@@ -1,6 +1,3 @@
-def getBuildUser() {
-    return currentBuild.rawBuild.getCause(Case.UserIdCause).getUserId()
-}
 
 pipeline {
     agent  any 
@@ -13,9 +10,6 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                script {
-                    BUILD_USER = getBuildUser()
-                }
                 withCredentials ([sshUserPrivateKey(credentialsId: 'gitk', keyFileVariable: 'GIT_K', usernameVariable: 'GIT_U')]) {
                     sh "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${GIT_K} ${GIT_U}@jenkins-00 hostname"
                     sh "cat ${GIT_K} | tee ~/.ssh/id_rsa; chmod 600 ~/.ssh/id_rsa"
@@ -47,7 +41,7 @@ pipeline {
             echo "Always result. 4"
             mail to: 'qi.jin@supplyframe.cn',
               subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult} (by ${BUILD_USER})"
+              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
             slackSend color: 'good', message: 'Message from Jenkins Pipeline'
         }
         unstable {
