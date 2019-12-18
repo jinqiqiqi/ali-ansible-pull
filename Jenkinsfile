@@ -34,11 +34,9 @@ pipeline {
         }
         always {
             echo "Always result. 4"
-            mailext to: 'qi.jin@supplyframe.cn',
+            mail to: 'qi.jin@supplyframe.cn',
               subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result",
-              attachLog: true,
-              compressLog: true
+              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result"
         }
         unstable {
             echo "Unstable result. 5"
