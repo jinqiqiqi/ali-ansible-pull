@@ -41,7 +41,7 @@ pipeline {
               body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult}."
             withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
                 slackSend teamDomain: 'bigeworld',
-                    channel: 'jenkins', 
+                    channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
                     message: 'Not so good message from Jenkins Pipeline'
