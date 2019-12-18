@@ -1,7 +1,14 @@
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Case.UserIdCause).getUserId()
+}
+
 pipeline {
     agent  any 
     triggers {
         cron('0 */2 * * *')
+    }
+    environment {
+        BUILD_USER = ''
     }
     stages {
         stage('build') {
@@ -33,10 +40,13 @@ pipeline {
             echo "Changed result. 3"
         }
         always {
+            script {
+                BUILD_USER = getBuildUser()
+            }
             echo "Always result. 4"
             mail to: 'qi.jin@supplyframe.cn',
               subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result"
+              body: "${env.BUILD_URL} (${env.JOB_NAME} # ${env.BUILD_NUMBER}) has result: ${currentBuild.currentResult} (by ${BUILD_USER})"
             slackSend color: 'good', message: 'Message from Jenkins Pipeline'
         }
         unstable {
