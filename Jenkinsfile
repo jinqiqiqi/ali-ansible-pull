@@ -15,6 +15,9 @@ pipeline {
     stages {
         stage("start") {
             steps {
+                script {
+                    last_running_stage = env.STAGE_NAME
+                }
                 withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
                     slackSend teamDomain: 'bigeworld',
                         channel: '#jenkins', 
@@ -26,6 +29,9 @@ pipeline {
         }
         stage('build') {
             steps {
+                script {
+                    last_running_stage = env.STAGE_NAME
+                }
                 withCredentials ([sshUserPrivateKey(credentialsId: 'gitk', keyFileVariable: 'GIT_K', usernameVariable: 'GIT_U')]) {
                     sh "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${GIT_K} ${GIT_U}@jenkins-00 hostname"
                     sh "cat ${GIT_K} | tee ~/.ssh/id_rsa; chmod 600 ~/.ssh/id_rsa"
@@ -36,13 +42,10 @@ pipeline {
         }
         stage('publish') {
             steps {
-                sh 'date; pwd; hostname'
                 script {
-                    def browsers = ['chrome', 'firefox']
-                    for (int i=0; i<browsers.size(); i++) {
-                        echo "Testing the ${browsers[i]} browser..."
-                    }
+                    last_running_stage = env.STAGE_NAME
                 }
+                sh 'date; pwd; hostname'
             }
         }
     }
@@ -58,30 +61,30 @@ pipeline {
             }
         }
         failure {
-            echo "Failure result. 2"
-            withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
-                slackSend teamDomain: 'bigeworld',
-                    channel: '#jenkins', 
-                    token: slackCredentials, 
-                    color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (failure): ${currentBuild.currentResult}."
-            }
+            // echo "Failure result. 2"
+            // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
+            //     slackSend teamDomain: 'bigeworld',
+            //         channel: '#jenkins', 
+            //         token: slackCredentials, 
+            //         color: 'danger',
+            //         message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (failure): ${currentBuild.currentResult}."
+            // }
         }
         changed {
             echo "Changed result. 3"
-            withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
-                slackSend teamDomain: 'bigeworld',
-                    channel: '#jenkins', 
-                    token: slackCredentials, 
-                    color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (changed): ${currentBuild.currentResult}."
-            }
+            // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
+            //     slackSend teamDomain: 'bigeworld',
+            //         channel: '#jenkins', 
+            //         token: slackCredentials, 
+            //         color: 'danger',
+            //         message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (changed): ${currentBuild.currentResult}."
+            // }
         }
         always {
             echo "Always result. 4"
             mail to: 'qi.jin@supplyframe.cn',
               subject: "${currentBuild.currentResult} status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
-              body: "Result: ${currentBuild.currentResult}\nJob Name: ${env.JOB_NAME}\n Build Number: #${env.BUILD_NUMBER}\n Build URL: ${env.BUILD_URL}\n Branch: ${env.GIT_BRANCH} \nDuration: ${currentBuild.durationString}\n Change Set:${currentBuild.changeSets}"
+              body: "Result: ${currentBuild.currentResult}\nJob Name: ${env.JOB_NAME}\nBuild Number: #${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}\nBranch: ${env.GIT_BRANCH} \nDuration: ${currentBuild.durationString}\nChange Set:${currentBuild.changeSets}\nLast Stage: ${last_running_stage}"
             // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
             //     slackSend teamDomain: 'bigeworld',
             //         channel: '#jenkins', 
@@ -97,18 +100,18 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (unstable): ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (unstable): ${currentBuild.currentResult}. stage: ${last_running_stage}"
             }
         }
         aborted {
-            echo "Task aborted. 6"
-            withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
-                slackSend teamDomain: 'bigeworld',
-                    channel: '#jenkins', 
-                    token: slackCredentials, 
-                    color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (aborted): ${currentBuild.currentResult}."
-            }
+            // echo "Task aborted. 6"
+            // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
+            //     slackSend teamDomain: 'bigeworld',
+            //         channel: '#jenkins', 
+            //         token: slackCredentials, 
+            //         color: 'danger',
+            //         message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (aborted): ${currentBuild.currentResult}."
+            // }
         }
         unsuccessful {
             echo "Unsuccessful result. 7"
