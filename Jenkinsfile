@@ -81,7 +81,7 @@ pipeline {
             echo "Always result. 4"
             mail to: 'qi.jin@supplyframe.cn',
               subject: "${currentBuild.currentResult} status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
-              body: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) on branch ${env.GIT_BRANCH}=${env.PLATFORM} has result: ${currentBuild.currentResult}. ${currentBuild.keepLog}. ${currentBuild.durationString}"
+              body: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) on branch ${env.GIT_BRANCH}=${env.PLATFORM} has result: ${currentBuild.currentResult}. ${currentBuild.description}. ${currentBuild.durationString}. ${currentBuild.changeSets}"
             // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
             //     slackSend teamDomain: 'bigeworld',
             //         channel: '#jenkins', 
