@@ -76,13 +76,13 @@ pipeline {
             mail to: 'qi.jin@supplyframe.cn',
               subject: "Status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
               body: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
-            withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
-                slackSend teamDomain: 'bigeworld',
-                    channel: '#jenkins', 
-                    token: slackCredentials, 
-                    color: 'good',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (always): ${currentBuild.currentResult}."
-            }
+            // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
+            //     slackSend teamDomain: 'bigeworld',
+            //         channel: '#jenkins', 
+            //         token: slackCredentials, 
+            //         color: 'good',
+            //         message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (always): ${currentBuild.currentResult}."
+            // }
         }
         unstable {
             echo "Unstable result. 5"
