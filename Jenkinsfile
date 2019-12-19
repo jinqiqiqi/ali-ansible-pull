@@ -74,7 +74,7 @@ pipeline {
         always {
             echo "Always result. 4"
             mail to: 'qi.jin@supplyframe.cn',
-              subject: "Status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
+              subject: "${currentBuild.currentResult} status of pipeline: ${currentBuild.fullDisplayName} [Jenkins-mailer@aliyun-eefocus]",
               body: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
             // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
             //     slackSend teamDomain: 'bigeworld',
