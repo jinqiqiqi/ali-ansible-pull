@@ -11,7 +11,6 @@ pipeline {
         retry(2)
         timeout(time: 15, unit: 'MINUTES')
         timestamps()
-        githubPush()
     }
     stages {
         stage("start") {
