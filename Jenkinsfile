@@ -48,7 +48,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'good',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (success): ${currentBuild.currentResult}."
             }
         }
         failure {
@@ -58,7 +58,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (failure): ${currentBuild.currentResult}."
             }
         }
         changed {
@@ -68,7 +68,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (changed): ${currentBuild.currentResult}."
             }
         }
         always {
@@ -81,7 +81,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'good',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (always): ${currentBuild.currentResult}."
             }
         }
         unstable {
@@ -91,7 +91,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (unstable): ${currentBuild.currentResult}."
             }
         }
         aborted {
@@ -101,7 +101,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (aborted): ${currentBuild.currentResult}."
             }
         }
         unsuccessful {
@@ -111,7 +111,7 @@ pipeline {
                     channel: '#jenkins', 
                     token: slackCredentials, 
                     color: 'danger',
-                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result: ${currentBuild.currentResult}."
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has result (unsuccessful): ${currentBuild.currentResult}."
             }
         }
         cleanup {
