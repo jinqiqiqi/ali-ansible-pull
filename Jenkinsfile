@@ -61,7 +61,7 @@ pipeline {
             }
         }
         failure {
-            // echo "Failure result. 2"
+            echo "Failure result. 2"
             // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
             //     slackSend teamDomain: 'bigeworld',
             //         channel: '#jenkins', 
@@ -104,7 +104,7 @@ pipeline {
             }
         }
         aborted {
-            // echo "Task aborted. 6"
+            echo "Task aborted. 6"
             // withCredentials([string(credentialsId: 'slack-token', variable: 'slackCredentials')]) {
             //     slackSend teamDomain: 'bigeworld',
             //         channel: '#jenkins', 
