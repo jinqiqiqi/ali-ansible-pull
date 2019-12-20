@@ -1,8 +1,8 @@
-
+GITHUB_PROJECT=""
 pipeline {
     agent  any 
     triggers {
-        cron('0 */2 * * *')
+        // cron('0 */2 * * *')
     }
     environment {
         BUILD_USER = ''
@@ -25,6 +25,7 @@ pipeline {
                         color: 'good',
                         message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (${env.BUILD_URL}) has started."
                 }
+
             }
         }
         stage('build') {
