@@ -1,9 +1,9 @@
 GITHUB_PROJECT=""
 pipeline {
     agent  any 
-    triggers {
+    // triggers {
         // cron('0 */2 * * *')
-    }
+    // }
     environment {
         BUILD_USER = ''
     }
