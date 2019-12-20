@@ -1,30 +1,30 @@
----
+# ---
 
-- name: Install ansible dependencies
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - ansible
-    - git
+# - name: Install ansible dependencies
+#   package:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - ansible
+#     - git
 
-- name: Create local working directory
-  file:
-    path: "{{ work_dir }}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0751
+# - name: Create local working directory
+#   file:
+#     path: "{{ work_dir }}"
+#     state: directory
+#     owner: root
+#     group: root
+#     mode: 0751
 
-- name: "Install ansible-pull task for group: {{ hostvars[inventory_hostname].group_names[0] }}"
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - { src: "cron_ansible-pull.j2", dest: "/etc/cron.d/ansible-pull" }
-    - { src: "logrotate_ansible-pull.j2", dest: "/etc/logrotate.d/ansible-pull" }
-  notify:
-    - crontab updated
+# - name: "Install ansible-pull task for group: {{ hostvars[inventory_hostname].group_names[0] }}"
+#   template:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     owner: root
+#     group: root
+#     mode: 0644
+#   with_items:
+#     - { src: "cron_ansible-pull.j2", dest: "/etc/cron.d/ansible-pull" }
+#     - { src: "logrotate_ansible-pull.j2", dest: "/etc/logrotate.d/ansible-pull" }
+#   notify:
+#     - crontab updated
